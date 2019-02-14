@@ -1,0 +1,75 @@
+package com.revature.ExpenseWebApp.servlets;
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.revature.ExpenseWebApp.controllers.Controller;
+import com.revature.ExpenseWebApp.controllers.ReimbursementController;
+import com.revature.ExpenseWebApp.controllers.UserController;
+import com.revature.ExpenseWebApp.delegate.Delegate;
+import com.revature.ExpenseWebApp.models.Reimbursement;
+import com.revature.ExpenseWebApp.models.User;
+
+public class DispatcherServlet extends HttpServlet {
+	
+	Map<Delegate, Controller> controllerRegistry = new HashMap<>();
+	
+	//set up controller registry on initialization
+	public void init() {
+		Controller reimbursementController = new ReimbursementController();
+		Controller userController = new UserController();
+		
+		controllerRegistry.put(Delegate.REIMBURSEMENTS, reimbursementController);
+		controllerRegistry.put(Delegate.USERS, userController);
+	}
+	
+	public Controller getController(HttpServletRequest req) {
+		String uri = req.getRequestURI();
+		System.out.println(uri);
+		String[] strings = uri.split("/");
+		String resource = null;
+		
+		if(strings.length > 1) {
+			resource = strings[2];
+		}
+		
+		Delegate delegate = Delegate.getDelegate(resource);
+		
+		return controllerRegistry.get(delegate);
+	}
+		
+	// when receiving request, determine which controller it should go to, then add attribute to request transmitting that info
+	public void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		Controller controller = getController(req);
+		if (controller == null) {
+			resp.sendError(404);
+			return;
+		}
+		req.setAttribute("controller", controller);
+		super.service(req, resp);
+	}
+	
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		Controller controller = (Controller) req.getAttribute("controller");
+		controller.handleGet(req, resp);
+		super.doGet(req, resp);
+	}
+	
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		Controller controller = (Controller) req.getAttribute("controller");
+		controller.handlePost(req, resp);
+		super.doPost(req, resp);
+	}
+	
+//	@Override
+//	public void service(HttpServletRequest request, HttpServletResponse response) {
+//		System.out.println("Landing request accepted");
+//	}
+}
