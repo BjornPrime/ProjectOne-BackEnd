@@ -16,6 +16,7 @@ import com.revature.ExpenseWebApp.services.UserService;
 public class UserController implements Controller {
 
 	public void handleGet(HttpServletRequest req, HttpServletResponse resp) {
+				
 		try {
 			User user = UserService.getUser(req.getAttribute("user-id"));
 			ObjectMapper om = new ObjectMapper();
@@ -25,12 +26,15 @@ public class UserController implements Controller {
 			
 			om.writeValue(writer, user);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
 	public void handlePost(HttpServletRequest req, HttpServletResponse resp) {
+		//handle sign-up
+		//handle login
+		//handle logout
+		
 		try {
 			InputStream is = req.getInputStream();
 			
@@ -38,7 +42,7 @@ public class UserController implements Controller {
 			
 			User user = om.readValue(is, User.class);
 			
-			UserService.createUser(user);
+			UserService.signup(user);
 		} catch(IOException e) {
 			e.printStackTrace();
 		}

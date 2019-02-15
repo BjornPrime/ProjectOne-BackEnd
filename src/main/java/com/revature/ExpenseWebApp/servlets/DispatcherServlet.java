@@ -13,8 +13,7 @@ import com.revature.ExpenseWebApp.controllers.Controller;
 import com.revature.ExpenseWebApp.controllers.ReimbursementController;
 import com.revature.ExpenseWebApp.controllers.UserController;
 import com.revature.ExpenseWebApp.delegate.Delegate;
-import com.revature.ExpenseWebApp.models.Reimbursement;
-import com.revature.ExpenseWebApp.models.User;
+import com.revature.ExpenseWebApp.util.HttpException;
 
 public class DispatcherServlet extends HttpServlet {
 	
@@ -25,8 +24,8 @@ public class DispatcherServlet extends HttpServlet {
 		Controller reimbursementController = new ReimbursementController();
 		Controller userController = new UserController();
 		
-		controllerRegistry.put(Delegate.REIMBURSEMENTS, reimbursementController);
-		controllerRegistry.put(Delegate.USERS, userController);
+		controllerRegistry.put(Delegate.REIMBURSEMENT, reimbursementController);
+		controllerRegistry.put(Delegate.USER, userController);
 	}
 	
 	public Controller getController(HttpServletRequest req) {
@@ -37,11 +36,13 @@ public class DispatcherServlet extends HttpServlet {
 		
 		if(strings.length > 1) {
 			resource = strings[2];
+			Delegate delegate = Delegate.getDelegate(resource);		
+			return controllerRegistry.get(delegate);
+		} else {
+			return null;
 		}
 		
-		Delegate delegate = Delegate.getDelegate(resource);
 		
-		return controllerRegistry.get(delegate);
 	}
 		
 	// when receiving request, determine which controller it should go to, then add attribute to request transmitting that info
@@ -52,7 +53,11 @@ public class DispatcherServlet extends HttpServlet {
 			return;
 		}
 		req.setAttribute("controller", controller);
-		super.service(req, resp);
+		try {
+			super.service(req, resp);
+		} catch (HttpException e) {
+			resp.sendError(e.getCode());
+		}
 	}
 	
 	@Override
