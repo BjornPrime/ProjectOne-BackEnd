@@ -47,6 +47,12 @@ public class DispatcherServlet extends HttpServlet {
 		
 	// when receiving request, determine which controller it should go to, then add attribute to request transmitting that info
 	public void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		
+		resp.addHeader("Access-Control-Allow-Origin", "http://localhost:4200");
+		resp.addHeader("Access-Control-Allow-Headers", "content-type");
+		// ^^^ make these two lines a private method ^^^
+		// They provide responses with clearance and avoid CORS errors
+		
 		Controller controller = getController(req);
 		if (controller == null) {
 			resp.sendError(404);

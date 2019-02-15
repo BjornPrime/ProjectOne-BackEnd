@@ -16,8 +16,8 @@ public enum Delegate {
 	LOGOUT(new LogoutController()),
 	SUBMIT(new SubmitController()),
 	RESPOND(new RespondController()),
-	USER(new UserController()),
-	REIMBURSEMENT(new ReimbursementController()),
+	USERS(new UserController()),
+	REIMBURSEMENTS(new ReimbursementController()),
 	NOT_FOUND(new Controller() {});
 	
 	public Controller controller;
