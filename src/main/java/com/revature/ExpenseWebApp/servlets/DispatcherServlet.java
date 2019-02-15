@@ -17,15 +17,15 @@ import com.revature.ExpenseWebApp.util.HttpException;
 
 public class DispatcherServlet extends HttpServlet {
 	
-	Map<Delegate, Controller> controllerRegistry = new HashMap<>();
+//	Map<Delegate, Controller> controllerRegistry = new HashMap<>();
 	
 	//set up controller registry on initialization
 	public void init() {
-		Controller reimbursementController = new ReimbursementController();
-		Controller userController = new UserController();
-		
-		controllerRegistry.put(Delegate.REIMBURSEMENT, reimbursementController);
-		controllerRegistry.put(Delegate.USER, userController);
+//		Controller reimbursementController = new ReimbursementController();
+//		Controller userController = new UserController();
+//		
+//		controllerRegistry.put(Delegate.REIMBURSEMENT, reimbursementController);
+//		controllerRegistry.put(Delegate.USER, userController);
 	}
 	
 	public Controller getController(HttpServletRequest req) {
@@ -37,7 +37,7 @@ public class DispatcherServlet extends HttpServlet {
 		if(strings.length > 1) {
 			resource = strings[2];
 			Delegate delegate = Delegate.getDelegate(resource);		
-			return controllerRegistry.get(delegate);
+			return delegate.controller;
 		} else {
 			return null;
 		}

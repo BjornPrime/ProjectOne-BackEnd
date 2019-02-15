@@ -1,10 +1,12 @@
 package com.revature.ExpenseWebApp.delegate;
 
+import com.revature.ExpenseWebApp.controllers.RespondController;
 import com.revature.ExpenseWebApp.controllers.Controller;
 import com.revature.ExpenseWebApp.controllers.LoginController;
 import com.revature.ExpenseWebApp.controllers.LogoutController;
 import com.revature.ExpenseWebApp.controllers.ReimbursementController;
 import com.revature.ExpenseWebApp.controllers.SignupController;
+import com.revature.ExpenseWebApp.controllers.SubmitController;
 import com.revature.ExpenseWebApp.controllers.UserController;
 
 public enum Delegate {
@@ -12,6 +14,8 @@ public enum Delegate {
 	LOGIN(new LoginController()),
 	SIGNUP(new SignupController()),
 	LOGOUT(new LogoutController()),
+	SUBMIT(new SubmitController()),
+	RESPOND(new RespondController()),
 	USER(new UserController()),
 	REIMBURSEMENT(new ReimbursementController()),
 	NOT_FOUND(new Controller() {});

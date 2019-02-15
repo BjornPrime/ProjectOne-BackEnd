@@ -9,6 +9,11 @@ public class UserService {
 	
 	UserDao userDao = new UserDao();
 	
+	private static UserService userService = new UserService();
+	public static UserService getUserService() {
+		return userService;
+	}
+	
 	public static User signup(User user) {
 		if (user.getUserEmail().isEmpty()) {
 			throw new HttpException(400, "Email can't be empty");

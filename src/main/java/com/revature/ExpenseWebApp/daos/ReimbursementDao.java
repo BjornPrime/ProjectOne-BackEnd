@@ -1,5 +1,10 @@
 package com.revature.ExpenseWebApp.daos;
 
-public class ReimbursementDao {
+import com.revature.ExpenseWebApp.models.Reimbursement;
 
+public class ReimbursementDao {
+	
+	public void createReimbursement(Reimbursement reimbursement) {
+		
+	}
 }
