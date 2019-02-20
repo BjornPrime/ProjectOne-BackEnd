@@ -62,11 +62,11 @@ public class DispatcherServlet extends HttpServlet {
 		}
 		req.setAttribute("controller", controller);
 		System.out.println("controller set");
-		try {
+//		try {
 			super.service(req, resp);
-		} catch (HttpException e) {
-			resp.sendError(e.getCode());
-		}
+//		} catch (HttpException e) {
+//			resp.sendError(e.getCode());
+//		}
 	}
 	
 	@Override
@@ -74,7 +74,7 @@ public class DispatcherServlet extends HttpServlet {
 		Controller controller = (Controller) req.getAttribute("controller");
 		System.out.println("doGet invoked");
 		controller.handleGet(req, resp);
-		super.doGet(req, resp);
+//		super.doGet(req, resp);
 	}
 	
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -82,11 +82,11 @@ public class DispatcherServlet extends HttpServlet {
 		System.out.println("do Post invoked");
 		controller.handlePost(req, resp);
 		System.out.println("Post handled");
-		try{
-			super.doPost(req, resp);
-		} catch (IllegalStateException e) {
-			e.printStackTrace();
-		}
+//		try{
+//			super.doPost(req, resp);
+//		} catch (IllegalStateException e) {
+//			e.printStackTrace();
+//		}
 	}
 	
 //	@Override
