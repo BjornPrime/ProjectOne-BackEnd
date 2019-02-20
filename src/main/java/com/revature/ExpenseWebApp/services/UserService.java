@@ -15,7 +15,7 @@ public class UserService {
 	}
 	
 	public static User signup(User user) {
-		if (user.getUserEmail().isEmpty()) {
+		if (user.getEmail().isEmpty()) {
 			throw new HttpException(400, "Email can't be empty");
 		}
 		
@@ -36,7 +36,7 @@ public class UserService {
 		User user;
 		
 		if(userID.getClass() == Integer.class) {
-			return user = UserDao.retrieveUser(userID);
+			return user = UserDao.retrieveUser((int)userID);
 		} else {
 			return null;
 		}

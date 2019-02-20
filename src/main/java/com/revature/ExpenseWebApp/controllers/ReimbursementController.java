@@ -15,17 +15,19 @@ import com.revature.ExpenseWebApp.services.ReimbursementService;
 
 public class ReimbursementController implements Controller {
 
-	public User getUserFromSession(HttpServletRequest req, HttpServletResponse resp) {
+	public User getUserFromSession(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		HttpSession session = req.getSession();
 		User user = (User) session.getAttribute("user");
 		
 		if (user == null) {
 			resp.sendError(401);
-			return;
+			return null;
 		}
+		
+		return user;
 	}
 	
-	public void handleGet(HttpServletRequest req, HttpServletResponse resp) {
+	public void handleGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		User user = this.getUserFromSession(req, resp);
 		
 //		String reimbursementsFromString = req.getParameter("reimb_author");
@@ -39,7 +41,7 @@ public class ReimbursementController implements Controller {
 //			reimbursements = ReimbursementService.getReimbursementsSince(fromId);
 //		}
 //		
-		Reimbursement reimbursement = ReimbursementService.retrieveReimbursement(req.getAttribute("request-id"));
+		Reimbursement reimbursement = ReimbursementService.retrieveReimbursement((int) req.getAttribute("reimbursement-id"));
 		ObjectMapper om = new ObjectMapper();
 		
 		Writer writer = resp.getWriter();

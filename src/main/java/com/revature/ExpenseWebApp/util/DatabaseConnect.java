@@ -9,14 +9,20 @@ public class DatabaseConnect {
 	public static Connection conn = getConnection();
 	
 	public static Connection getConnection() {
-		String url = "";
-		String role ="";
-		String password = "";
-		Connection conn = null;
 		
-		try {conn = DriverManager.getConnection(url, role, password);
+		try {
+			String url = "jdbc:postgresql://devdb.csansgctnbwu.us-east-2.rds.amazonaws.com:5432/devdb";
+			String role ="expense_app_jdbc";
+			String password = System.getenv("devdbpwd");
+			
+			Class.forName("org.postgresql.Driver");
+//			Connection conn = null;
+			
+			conn = DriverManager.getConnection(url, role, password);
 			
 		} catch(SQLException e) {
+			e.printStackTrace();
+		} catch(ClassNotFoundException e) {
 			e.printStackTrace();
 		}
 		

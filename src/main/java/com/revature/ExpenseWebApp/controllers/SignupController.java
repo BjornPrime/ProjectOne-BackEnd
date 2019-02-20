@@ -14,7 +14,7 @@ public class SignupController implements Controller {
 	@Override
 	public void handlePost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		
-		UserService userService = new UserService();
+	//	UserService userService = new UserService();
 		
 		ObjectMapper om = new ObjectMapper();
 		User user = om.readValue(req.getInputStream(), User.class);

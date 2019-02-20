@@ -32,10 +32,12 @@ public class DispatcherServlet extends HttpServlet {
 		String uri = req.getRequestURI();
 		System.out.println(uri);
 		String[] strings = uri.split("/");
+		System.out.println(strings);
 		String resource = null;
 		
 		if(strings.length > 1) {
-			resource = strings[2];
+			resource = strings[3];
+			System.out.println(resource);
 			Delegate delegate = Delegate.getDelegate(resource);		
 			return delegate.controller;
 		} else {
@@ -47,7 +49,7 @@ public class DispatcherServlet extends HttpServlet {
 		
 	// when receiving request, determine which controller it should go to, then add attribute to request transmitting that info
 	public void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
+		System.out.println("service invoked");
 		resp.addHeader("Access-Control-Allow-Origin", "http://localhost:4200");
 		resp.addHeader("Access-Control-Allow-Headers", "content-type");
 		// ^^^ make these two lines a private method ^^^
@@ -59,6 +61,7 @@ public class DispatcherServlet extends HttpServlet {
 			return;
 		}
 		req.setAttribute("controller", controller);
+		System.out.println("controller set");
 		try {
 			super.service(req, resp);
 		} catch (HttpException e) {
@@ -69,13 +72,16 @@ public class DispatcherServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		Controller controller = (Controller) req.getAttribute("controller");
+		System.out.println("doGet invoked");
 		controller.handleGet(req, resp);
 		super.doGet(req, resp);
 	}
 	
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		Controller controller = (Controller) req.getAttribute("controller");
+		System.out.println("do Post invoked");
 		controller.handlePost(req, resp);
+		System.out.println("Post handled");
 		super.doPost(req, resp);
 	}
 	

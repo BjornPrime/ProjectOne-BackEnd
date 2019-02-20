@@ -17,9 +17,12 @@ public class LoginController implements Controller {
 	@Override
 	public void handlePost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		
+		System.out.println("post handler invoked");
 		ObjectMapper om = new ObjectMapper();
 		LoginRequestDTO dto = om.readValue(req.getReader(), LoginRequestDTO.class);
+		System.out.println("dto created");
 		User user = userService.login(dto);
+		System.out.println("log in invoked");
 		HttpSession session = req.getSession();
 		session.setAttribute("user", user);
 		

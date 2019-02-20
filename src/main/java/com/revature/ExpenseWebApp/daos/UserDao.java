@@ -13,9 +13,9 @@ public class UserDao {
 //	
 //	List<User> users = new ArrayList<>();
 //	Map<S>
-	String url = "";
-	String role = "";
-	String password = null;
+//	String url = "";
+//	String role = "";
+//	String password = null;
 //	public static Connection conn = null;
 //	
 //	try{
@@ -28,13 +28,17 @@ public class UserDao {
 		
 		Connection conn = DatabaseConnect.conn;
 		
+		System.out.println(user);
+
 		try{
 			String query = "SELECT * FROM users WHERE email = ?";
-		
+			
+			
 			
 			PreparedStatement statement = conn.prepareStatement(query);
 			
-			statement.setString(1, user.getUserEmail());
+			statement.setString(1, user.getEmail());
+			
 			
 			ResultSet resultSet = statement.executeQuery();
 		
@@ -49,6 +53,7 @@ public class UserDao {
 			
 			resultSet = statement.executeQuery();
 			
+			
 			if (resultSet.next()) {
 				throw new HttpException(400, "Username already in use");
 			}
@@ -59,7 +64,7 @@ public class UserDao {
 			statement.setString(2, user.getLastName());
 			statement.setString(3, user.getPassword());
 			statement.setString(4, user.getUsername());
-			statement.setString(5, user.getUserEmail());
+			statement.setString(5, user.getEmail());
 			statement.setInt(6, user.getUserRole());
 			
 			resultSet = statement.executeQuery();
@@ -80,6 +85,11 @@ public class UserDao {
 
 	public User getUserByEmail(String email) {
 		// search db by email and return user
+		return null;
+	}
+
+	public static User retrieveUser(int userID) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 	

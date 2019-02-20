@@ -12,4 +12,8 @@ public class ReimbursementService {
 		reimbursement.setRequestDate(Timestamp.valueOf(LocalDateTime.now()));
 		reimbursement.setRequestor(user.getUserID());
 	}
+	
+	public static Reimbursement retrieveReimbursement(int reimbID) {
+		return null;
+	}
 }
