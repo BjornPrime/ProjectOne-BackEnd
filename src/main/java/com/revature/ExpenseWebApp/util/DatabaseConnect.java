@@ -11,9 +11,13 @@ public class DatabaseConnect {
 	public static Connection getConnection() {
 		
 		try {
-			String url = "jdbc:postgresql://devdb.csansgctnbwu.us-east-2.rds.amazonaws.com:5432/devdb";
-			String role ="expense_app_jdbc";
-			String password = System.getenv("devdbpwd");
+//			String url = "jdbc:postgresql://devdb.csansgctnbwu.us-east-2.rds.amazonaws.com:5432/devdb";
+//			String role ="expense_app_jdbc";
+//			String password = "everything";//System.getenv("devdbpwd");
+			
+			String url = "jdbc:postgresql://localhost:5432/postgres";
+			String role = "expense_app_jdbc";
+			String password = "everything";
 			
 			Class.forName("org.postgresql.Driver");
 //			Connection conn = null;

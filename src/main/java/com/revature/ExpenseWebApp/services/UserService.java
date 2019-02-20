@@ -43,7 +43,9 @@ public class UserService {
 	}
 
 	public User login(LoginRequestDTO dto) {
+		System.out.println(dto);
 		User user = userDao.getUserByEmail(dto.getEmail());
+		System.out.println(user);
 		if(user != null && user.getPassword().equals(dto.getPassword())) {
 			return user;
 		}

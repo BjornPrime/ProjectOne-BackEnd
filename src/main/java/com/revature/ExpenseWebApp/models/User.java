@@ -9,7 +9,7 @@ public class User {
 	String lastName;
 	String email;
 	String password;
-	int userRole;
+	int userRole = 1;
 	Queue<Integer> userReimbs;
 	Queue<Integer> needResolution;
 	

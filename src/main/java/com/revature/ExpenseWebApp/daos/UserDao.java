@@ -33,12 +33,9 @@ public class UserDao {
 		try{
 			String query = "SELECT * FROM users WHERE email = ?";
 			
-			
-			
 			PreparedStatement statement = conn.prepareStatement(query);
 			
 			statement.setString(1, user.getEmail());
-			
 			
 			ResultSet resultSet = statement.executeQuery();
 		
@@ -58,7 +55,9 @@ public class UserDao {
 				throw new HttpException(400, "Username already in use");
 			}
 			
-			query = "INSERT INTO users (first_name, last_ name, password, username, email, role_id) VALUES (?, ?, ?, ?, ?, ?) RETURNING id";
+			query = "INSERT INTO users (first_name, last_name, password, username, email, user_role) VALUES (?, ?, ?, ?, ?, ?) RETURNING id";
+			
+			statement = conn.prepareStatement(query);
 			
 			statement.setString(1, user.getFirstName());
 			statement.setString(2, user.getLastName());
@@ -85,6 +84,34 @@ public class UserDao {
 
 	public User getUserByEmail(String email) {
 		// search db by email and return user
+		Connection conn = DatabaseConnect.conn;
+		
+		try {
+			String query = "SELECT * FROM users WHERE email = ?";
+			
+//			System.out.println(email);
+			
+			PreparedStatement statement = conn.prepareStatement(query);
+			
+			statement.setString(1, email);
+			
+			ResultSet resultSet = statement.executeQuery();
+			
+			if (resultSet.next()) {
+				System.out.println("user found");
+				User user = new User();
+				user.setUserID(resultSet.getInt("id"));
+				user.setFirstName(resultSet.getString("first_name"));
+				user.setLastName(resultSet.getString("last_name"));
+				user.setEmail(resultSet.getString("email"));
+				user.setUsername(resultSet.getString("username"));
+				user.setPassword(resultSet.getString("password"));
+				user.setUserRole(resultSet.getInt("user_role"));
+				return user;
+			}
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
 

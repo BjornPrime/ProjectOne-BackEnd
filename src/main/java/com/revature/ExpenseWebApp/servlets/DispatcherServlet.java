@@ -82,7 +82,11 @@ public class DispatcherServlet extends HttpServlet {
 		System.out.println("do Post invoked");
 		controller.handlePost(req, resp);
 		System.out.println("Post handled");
-		super.doPost(req, resp);
+		try{
+			super.doPost(req, resp);
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+		}
 	}
 	
 //	@Override

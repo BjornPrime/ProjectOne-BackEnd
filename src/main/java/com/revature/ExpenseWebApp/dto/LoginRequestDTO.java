@@ -18,6 +18,14 @@ public class LoginRequestDTO {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	public LoginRequestDTO() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	@Override
+	public String toString() {
+		return "LoginRequestDTO [email=" + email + ", password=" + password + "]";
+	}
 	
 	
 }
