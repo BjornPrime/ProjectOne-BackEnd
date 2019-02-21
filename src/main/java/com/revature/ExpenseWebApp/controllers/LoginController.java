@@ -5,6 +5,7 @@ import java.io.Writer;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revature.ExpenseWebApp.dto.LoginRequestDTO;
@@ -22,9 +23,20 @@ public class LoginController implements Controller {
 		LoginRequestDTO dto = om.readValue(req.getReader(), LoginRequestDTO.class);
 		System.out.println("dto created");
 		User user = userService.login(dto);
+		
+//		HttpSession session = req.getSession();
+//		session.setAttribute("userID", user.getUserID());
+//		if(user.getUserRole() == 2) {
+//			session.setAttribute("isManager", true);
+//		} else {
+//			session.setAttribute("isManager", false);
+//		};
+//		
+		
 		om = new ObjectMapper();
 		Writer writer = resp.getWriter();
 		om.writeValue(writer, user);
+		
 		System.out.println("log in invoked");
 		System.out.println(resp);
 //		HttpSession session = req.getSession();

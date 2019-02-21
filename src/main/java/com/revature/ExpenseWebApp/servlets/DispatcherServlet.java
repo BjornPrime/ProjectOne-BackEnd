@@ -52,6 +52,7 @@ public class DispatcherServlet extends HttpServlet {
 		System.out.println("service invoked");
 		resp.addHeader("Access-Control-Allow-Origin", "http://localhost:4200");
 		resp.addHeader("Access-Control-Allow-Headers", "content-type");
+		resp.addHeader("Access-Control-Allow-Credentials", "true");
 		// ^^^ make these two lines a private method ^^^
 		// They provide responses with clearance and avoid CORS errors
 		

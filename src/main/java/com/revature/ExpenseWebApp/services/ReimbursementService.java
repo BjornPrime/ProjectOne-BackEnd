@@ -1,5 +1,7 @@
 package com.revature.ExpenseWebApp.services;
 
+import java.util.List;
+
 import com.revature.ExpenseWebApp.daos.ReimbursementDao;
 import com.revature.ExpenseWebApp.models.Reimbursement;
 import com.revature.ExpenseWebApp.util.HttpException;
@@ -17,6 +19,21 @@ public class ReimbursementService {
 	
 	public static Reimbursement retrieveReimbursement(int reimbID) {
 		return null;
+	}
+
+	public static List<Reimbursement> getReimbursements() {
+		List<Reimbursement> reimbursements = ReimbursementDao.retrieveReimbursements();
+		return reimbursements;
+	}
+	
+	public static List<Reimbursement> getReimbursements(int userID) {
+		List<Reimbursement> reimbursements = ReimbursementDao.retrieveReimbursements(userID);
+		return reimbursements;
+	}
+
+	public static Reimbursement getDetails(int entryID) {
+		Reimbursement reimbursement = ReimbursementDao.retrieveDetails(entryID);
+		return reimbursement;
 	}
 
 }

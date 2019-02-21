@@ -1,9 +1,10 @@
 package com.revature.ExpenseWebApp.controllers;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.Writer;
+import java.util.List;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -28,7 +29,7 @@ public class ReimbursementController implements Controller {
 	}
 	
 	public void handleGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-		User user = this.getUserFromSession(req, resp);
+//		User user = this.getUserFromSession(req, resp);
 		
 //		String reimbursementsFromString = req.getParameter("reimb_author");
 //		List<Reimbursement> reimbursements;
@@ -41,24 +42,32 @@ public class ReimbursementController implements Controller {
 //			reimbursements = ReimbursementService.getReimbursementsSince(fromId);
 //		}
 //		
-		Reimbursement reimbursement = ReimbursementService.retrieveReimbursement((int) req.getAttribute("reimbursement-id"));
+//		Cookie[] cookieList = req.getCookies();
+//		
+//		for(Cookie cookie : cookieList) {
+//			System.out.println(cookie.getValue());
+//		}
+//		
+		List<Reimbursement> reimbursements = ReimbursementService.getReimbursements();
 		ObjectMapper om = new ObjectMapper();
 		
 		Writer writer = resp.getWriter();
 		
-		om.writeValue(writer, reimbursement);
+		om.writeValue(writer, reimbursements);
 		
 	}
 
 	public void handlePost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		
-		User user = getUserFromSession(req, resp);
-
-		
 		ObjectMapper om = new ObjectMapper();
-		Reimbursement reimbursement = om.readValue(req.getReader(), Reimbursement.class);
-		ReimbursementService.createReimbursement(reimbursement, user);
-		
+		int userID = om.readValue(req.getReader(), Integer.class);
+		List<Reimbursement> reimbursements = ReimbursementService.getReimbursements(userID);
+
+		om = new ObjectMapper();
+		om.writeValue(resp.getWriter(), reimbursements);
+//		Reimbursement reimbursement = om.readValue(req.getReader(), Reimbursement.class);
+//		ReimbursementService.createReimbursement(reimbursement);
+//		
 //		try {
 //			InputStream is = req.getInputStream();
 //		

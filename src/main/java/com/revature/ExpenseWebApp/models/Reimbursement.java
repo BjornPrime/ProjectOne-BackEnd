@@ -7,7 +7,7 @@ import javax.websocket.Decoder.BinaryStream;
 
 public class Reimbursement {
 	int reimbID;
-	int status = 0;
+	int status;
 	int type;
 	int author;
 	Timestamp submitDate;
@@ -15,11 +15,11 @@ public class Reimbursement {
 	String description;
 	String documentation = "";
 	int resolver;
-	int resolutionDate;
+	Timestamp resolutionDate;
 	String rejectionReason = null;
 	
 	public Reimbursement(int reimbID, int status, int type, int author, Timestamp submitDate,
-			BigDecimal amount, String description, String documentation, int resolver, int resolutionDate,
+			BigDecimal amount, String description, String documentation, int resolver, Timestamp resolutionDate,
 			String rejectionReason) {
 		super();
 		this.reimbID = reimbID;
@@ -107,11 +107,11 @@ public class Reimbursement {
 		this.resolver = resolver;
 	}
 
-	public int getResolutionDate() {
+	public Timestamp getResolutionDate() {
 		return resolutionDate;
 	}
 
-	public void setResolutionDate(int resolutionDate) {
+	public void setResolutionDate(Timestamp resolutionDate) {
 		this.resolutionDate = resolutionDate;
 	}
 
@@ -136,23 +136,23 @@ public class Reimbursement {
 				+ ", rejectionReason=" + rejectionReason + "]";
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((amount == null) ? 0 : amount.hashCode());
-		result = prime * result + author;
-		result = prime * result + ((description == null) ? 0 : description.hashCode());
-		result = prime * result + ((documentation == null) ? 0 : documentation.hashCode());
-		result = prime * result + reimbID;
-		result = prime * result + ((rejectionReason == null) ? 0 : rejectionReason.hashCode());
-		result = prime * result + resolutionDate;
-		result = prime * result + resolver;
-		result = prime * result + status;
-		result = prime * result + ((submitDate == null) ? 0 : submitDate.hashCode());
-		result = prime * result + type;
-		return result;
-	}
+//	@Override
+//	public int hashCode() {
+//		final int prime = 31;
+//		int result = 1;
+//		result = prime * result + ((amount == null) ? 0 : amount.hashCode());
+//		result = prime * result + author;
+//		result = prime * result + ((description == null) ? 0 : description.hashCode());
+//		result = prime * result + ((documentation == null) ? 0 : documentation.hashCode());
+//		result = prime * result + reimbID;
+//		result = prime * result + ((rejectionReason == null) ? 0 : rejectionReason.hashCode());
+//		result = prime * result + resolutionDate;
+//		result = prime * result + resolver;
+//		result = prime * result + status;
+//		result = prime * result + ((submitDate == null) ? 0 : submitDate.hashCode());
+//		result = prime * result + type;
+//		return result;
+//	}
 
 	@Override
 	public boolean equals(Object obj) {

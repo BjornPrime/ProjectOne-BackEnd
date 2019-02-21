@@ -8,6 +8,7 @@ import com.revature.ExpenseWebApp.controllers.ReimbursementController;
 import com.revature.ExpenseWebApp.controllers.SignupController;
 import com.revature.ExpenseWebApp.controllers.SubmitController;
 import com.revature.ExpenseWebApp.controllers.UserController;
+import com.revature.ExpenseWebApp.controllers.DetailsController;
 
 public enum Delegate {
 	//should these be for each action or each controller?
@@ -17,6 +18,7 @@ public enum Delegate {
 	SUBMIT(new SubmitController()),
 	RESPOND(new RespondController()),
 	USERS(new UserController()),
+	DETAILS(new DetailsController()),
 	REIMBURSEMENTS(new ReimbursementController()),
 	NOT_FOUND(new Controller() {});
 	
