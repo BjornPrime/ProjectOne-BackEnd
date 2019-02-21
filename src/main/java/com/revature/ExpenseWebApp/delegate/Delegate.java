@@ -1,6 +1,6 @@
 package com.revature.ExpenseWebApp.delegate;
 
-import com.revature.ExpenseWebApp.controllers.RespondController;
+import com.revature.ExpenseWebApp.controllers.DisposeController;
 import com.revature.ExpenseWebApp.controllers.Controller;
 import com.revature.ExpenseWebApp.controllers.LoginController;
 import com.revature.ExpenseWebApp.controllers.LogoutController;
@@ -16,7 +16,7 @@ public enum Delegate {
 	SIGNUP(new SignupController()),
 	LOGOUT(new LogoutController()),
 	SUBMIT(new SubmitController()),
-	RESPOND(new RespondController()),
+	DISPOSE(new DisposeController()),
 	USERS(new UserController()),
 	DETAILS(new DetailsController()),
 	REIMBURSEMENTS(new ReimbursementController()),

@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.mindrot.jbcrypt.BCrypt;
+
 import com.revature.ExpenseWebApp.models.User;
 import com.revature.ExpenseWebApp.util.DatabaseConnect;
 import com.revature.ExpenseWebApp.util.HttpException;
@@ -29,6 +31,8 @@ public class UserDao {
 		Connection conn = DatabaseConnect.conn;
 		
 		System.out.println(user);
+		
+		
 
 		try{
 			String query = "SELECT * FROM users WHERE email = ?";
@@ -61,7 +65,7 @@ public class UserDao {
 			
 			statement.setString(1, user.getFirstName());
 			statement.setString(2, user.getLastName());
-			statement.setString(3, user.getPassword());
+			statement.setString(3, BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
 			statement.setString(4, user.getUsername());
 			statement.setString(5, user.getEmail());
 			statement.setInt(6, user.getUserRole());

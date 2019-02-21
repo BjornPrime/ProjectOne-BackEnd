@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.revature.ExpenseWebApp.dto.DisposalRequestDTO;
 import com.revature.ExpenseWebApp.models.Reimbursement;
 import com.revature.ExpenseWebApp.util.DatabaseConnect;
 
@@ -151,10 +152,30 @@ public class ReimbursementDao {
 				}
 				reimbursement.setSubmitDate(resultSet.getTimestamp("date_submitted"));
 				reimbursement.setType(resultSet.getInt("type"));
+				return reimbursement;
 			}
 		} catch(SQLException e) {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	public static void updateReimbursement(DisposalRequestDTO disposal) {
+		Connection conn = DatabaseConnect.conn;
+		
+		try {
+			String query = "UPDATE reimbursements SET status = ? WHERE id = ?";
+			
+			PreparedStatement statement = conn.prepareStatement(query);
+			
+			statement.setInt(1, disposal.getStatusUpdate());
+			statement.setInt(2, disposal.getReimbursementID());
+			
+			ResultSet resultSet = statement.executeQuery();
+			
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
+		
 	}
 }
