@@ -1,5 +1,7 @@
 package com.revature.ExpenseWebApp.services;
 
+import org.mindrot.jbcrypt.BCrypt;
+
 import com.revature.ExpenseWebApp.daos.UserDao;
 import com.revature.ExpenseWebApp.dto.LoginRequestDTO;
 import com.revature.ExpenseWebApp.models.User;
@@ -46,7 +48,7 @@ public class UserService {
 		System.out.println(dto);
 		User user = userDao.getUserByEmail(dto.getEmail());
 		System.out.println(user);
-		if(user != null && user.getPassword().equals(dto.getPassword())) {
+		if(user != null && user.getPassword().equals(BCrypt.hashpw(dto.getPassword(), user.getSalt()))) {
 			return user;
 		}
 		throw new HttpException(401, "Invalid login credentials");

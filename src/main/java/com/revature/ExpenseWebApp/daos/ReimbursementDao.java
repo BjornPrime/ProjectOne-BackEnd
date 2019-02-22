@@ -21,7 +21,7 @@ public class ReimbursementDao {
 		Connection conn = DatabaseConnect.conn;
 		
 		try {
-			String query = "INSERT INTO reimbursements (amount, date_submitted, description, author, status, type) VALUES (?, ?, ?, ?, ?, ?) RETURNING id";
+			String query = "INSERT INTO reimbursements (amount, date_submitted, description, author, status, type, author_name) VALUES (?, ?, ?, ?, ?, ?, ?) RETURNING id";
 			
 			PreparedStatement statement = conn.prepareStatement(query);
 			
@@ -31,6 +31,8 @@ public class ReimbursementDao {
 			statement.setInt(4, reimbursement.getAuthor());
 			statement.setInt(5, reimbursement.getStatus());
 			statement.setInt(6, reimbursement.getType());
+			statement.setString(7, reimbursement.getAuthorName());
+//			statement.setBlob(8, reimbursement.getDocumentation());
 //			statement.setString(4, reimbursement.getDocumentation());
 			
 			ResultSet resultSet = statement.executeQuery();
@@ -59,12 +61,15 @@ public class ReimbursementDao {
 			
 			while(resultSet.next()) {
 				Reimbursement reimb = new Reimbursement();
+				
 				reimb.setAmount(resultSet.getBigDecimal("amount"));
 				reimb.setType(resultSet.getInt("type"));
 				reimb.setSubmitDate(resultSet.getTimestamp("date_submitted"));
 				reimb.setStatus(resultSet.getInt("status"));
 				reimb.setAuthor(resultSet.getInt("author"));
+				reimb.setAuthorName(resultSet.getString("author_name"));
 				reimb.setReimbID(resultSet.getInt("id"));
+		//		reimb.setDocumentation(resultSet.getBinaryStream("receipt"));
 				reimbursements.add(reimb);
 			}
 			if(reimbursements.size() < 1) {
@@ -113,6 +118,8 @@ public class ReimbursementDao {
 					reimb.setStatus(resultSet.getInt("status"));
 					reimb.setAuthor(resultSet.getInt("author"));
 					reimb.setReimbID(resultSet.getInt("id"));
+					reimb.setAuthorName(resultSet.getString("author_name"));
+		//			reimb.setDocumentation(resultSet.getBinaryStream("receipt"));
 					reimbursements.add(reimb);
 				}
 				if(reimbursements.size() < 1) {
@@ -143,6 +150,7 @@ public class ReimbursementDao {
 			if(resultSet.next()) {
 				reimbursement.setAmount(resultSet.getBigDecimal("amount"));
 				reimbursement.setAuthor(resultSet.getInt("author"));
+				reimbursement.setAuthorName(resultSet.getString("author_name"));
 				reimbursement.setDescription(resultSet.getString("description"));
 				reimbursement.setReimbID(resultSet.getInt("id"));
 				reimbursement.setStatus(resultSet.getInt("status"));
@@ -152,6 +160,7 @@ public class ReimbursementDao {
 				}
 				reimbursement.setSubmitDate(resultSet.getTimestamp("date_submitted"));
 				reimbursement.setType(resultSet.getInt("type"));
+	//			reimbursement.setDocumentation(resultSet.getBinaryStream("receipt"));
 				return reimbursement;
 			}
 		} catch(SQLException e) {

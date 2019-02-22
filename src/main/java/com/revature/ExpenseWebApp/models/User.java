@@ -12,9 +12,22 @@ public class User {
 	int userRole = 1;
 	Queue<Integer> userReimbs;
 	Queue<Integer> needResolution;
+	String salt;
 	
 	
 	
+	public String getSalt() {
+		return salt;
+	}
+
+
+
+	public void setSalt(String salt) {
+		this.salt = salt;
+	}
+
+
+
 	public User(int userID, String username, String firstName, String lastName, String email, String password,
 			int userRole, Queue<Integer> userReimbs, Queue<Integer> needResolution) {
 		super();

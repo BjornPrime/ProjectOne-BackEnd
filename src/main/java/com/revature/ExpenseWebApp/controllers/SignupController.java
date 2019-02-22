@@ -20,6 +20,6 @@ public class SignupController implements Controller {
 		User user = om.readValue(req.getInputStream(), User.class);
 		user = UserService.signup(user);
 		om.writeValue(resp.getWriter(), user);
-		Controller.super.handlePost(req, resp);
+//		Controller.super.handlePost(req, resp);
 	}
 }

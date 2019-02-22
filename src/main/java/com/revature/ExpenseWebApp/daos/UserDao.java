@@ -59,16 +59,19 @@ public class UserDao {
 				throw new HttpException(400, "Username already in use");
 			}
 			
-			query = "INSERT INTO users (first_name, last_name, password, username, email, user_role) VALUES (?, ?, ?, ?, ?, ?) RETURNING id";
+			query = "INSERT INTO users (first_name, last_name, password, username, email, user_role, salt) VALUES (?, ?, ?, ?, ?, ?, ?) RETURNING id";
 			
 			statement = conn.prepareStatement(query);
 			
+			String salt = BCrypt.gensalt();
+			
 			statement.setString(1, user.getFirstName());
 			statement.setString(2, user.getLastName());
-			statement.setString(3, BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
+			statement.setString(3, BCrypt.hashpw(user.getPassword(), salt));
 			statement.setString(4, user.getUsername());
 			statement.setString(5, user.getEmail());
 			statement.setInt(6, user.getUserRole());
+			statement.setString(7, salt);
 			
 			resultSet = statement.executeQuery();
 			
@@ -111,6 +114,7 @@ public class UserDao {
 				user.setUsername(resultSet.getString("username"));
 				user.setPassword(resultSet.getString("password"));
 				user.setUserRole(resultSet.getInt("user_role"));
+				user.setSalt(resultSet.getString("salt"));
 				return user;
 			}
 		} catch(SQLException e) {
